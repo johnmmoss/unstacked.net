@@ -1,0 +1,12 @@
+.content {
+   text-align: left;
+}
+
+.content table {
+   margin: auto auto;
+   padding:20px;
+}
+
+th, td {
+   padding:10px;
+}
