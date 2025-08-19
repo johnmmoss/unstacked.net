@@ -3,7 +3,6 @@ using System.Text.Json;
 using AzureFunctionSample1.Models;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.Functions.Worker.Http;
 
 namespace AzureFunctionSample1.Functions;
@@ -18,11 +17,12 @@ public class WeatherFunction
     }
 
     [Function("WeatherFunction")]
-    public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", "post")] HttpRequestData request)
+    public async Task<HttpResponseData> Run(
+        [HttpTrigger(AuthorizationLevel.Function, "get", "post")] 
+        HttpRequestData request)
     {
-        _logger.LogInformation("C# HTTP trigger function processed a request.");
+        _logger.LogInformation("Checking the weather...");
         
-        var method = request.Method;
         var requestBody = await new StreamReader(request.Body).ReadToEndAsync();
         var weatherRequest = JsonSerializer.Deserialize<WeatherRequest>(requestBody, new JsonSerializerOptions
         {

@@ -1,6 +1,4 @@
-﻿using System.Runtime.InteropServices.JavaScript;
-
-namespace AzureFunctionSample1.Models;
+﻿namespace AzureFunctionSample1.Models;
 
 public class WeatherRequest
 {
