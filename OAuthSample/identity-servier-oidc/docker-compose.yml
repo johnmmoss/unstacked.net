@@ -1,0 +1,40 @@
+version: '3.4'
+
+services:
+  oidc-server:
+    image: soluto/oidc-server-mock:latest
+    ports:
+      - "8010:443"
+      - "8020:80"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+:443;http://+80
+      ASPNETCORE_HTTPS_PORT: 8010
+      ASPNETCORE_Kestrel__Certificates__Default__Password: password
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
+      AUTHENTICATION:ISSUER: https://localhost:8010
+      SERVER_OPTIONS_INLINE: |
+        {         
+          "Authentication": {
+            "CookieSameSiteMode": "Lax",
+            "CheckSessionCookieSameSiteMode": "Lax"
+          }
+        }
+      USERS_CONFIGURATION_INLINE: |
+        [
+            {
+            "SubjectId":"john@email.com",
+            "Username":"John",
+            "Password":"Password1!",
+            "Claims": [
+                {
+                  "Type": "email",
+                  "Value": "john@email.com"
+                },
+            ]}
+        ]
+      CLIENTS_CONFIGURATION_PATH: /tmp/config/config.json
+
+    volumes:
+      - ./mock-oidc:/tmp/config:ro
+      - ~/.aspnet/https:/https:ro
