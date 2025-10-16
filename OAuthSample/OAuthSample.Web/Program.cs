@@ -1,7 +1,47 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.IdentityModel.JsonWebTokens;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+using Microsoft.IdentityModel.Tokens;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+// Add authorization services
+builder.Services.AddAuthorization();
+
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+    })
+    .AddCookie()
+    .AddOpenIdConnect(options =>
+    {
+        var oidcConfig = builder.Configuration.GetSection("OpenIDConnectSettings");
+
+        options.Authority = oidcConfig["Authority"];
+        options.ClientId = oidcConfig["ClientId"];
+        options.ClientSecret = oidcConfig["ClientSecret"];
+
+        options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.ResponseType = OpenIdConnectResponseType.Code;
+
+        options.SaveTokens = true;
+        options.GetClaimsFromUserInfoEndpoint = true;
+
+        // Add required scopes
+        options.Scope.Add("openid");
+        options.Scope.Add("profile");
+
+        options.MapInboundClaims = false;
+        options.TokenValidationParameters.NameClaimType = JwtRegisteredClaimNames.Name;
+        options.TokenValidationParameters.RoleClaimType = "roles";
+
+        options.RequireHttpsMetadata = false;
+    });
 
 var app = builder.Build();
 
@@ -18,6 +58,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

@@ -10,7 +10,7 @@
             "AllowAccessTokensViaBrowser": false,
             "RequirePkce": true,
             "RedirectUris": [
-                  "http://localhost:3000"
+                  "http://localhost:5077"
             ],
             "AllowedScopes": [
                   "openid",
