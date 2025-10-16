@@ -1,0 +1,34 @@
+[
+      {
+            "ClientId": "mft-api-dev",
+            "Description": "Mock OIDC for running Identity Server locally",
+            "AllowedGrantTypes": [
+                  "authorization_code",
+                  "client_credentials",
+                  "password"
+            ],
+            "AllowAccessTokensViaBrowser": false,
+            "RequirePkce": true,
+            "RedirectUris": [
+                  "http://localhost:3000"
+            ],
+            "AllowedScopes": [
+                  "openid",
+                  "profile",
+                  "email",
+                  "mft_api"
+            ],
+            "RequireClientSecret": false,
+            "ClientSecrets": [
+                  "MyMFTSecret"
+            ],
+            "IdentityTokenLifetime": 3600,
+            "AccessTokenLifetime": 3600,
+            "Claims": [
+                  {
+                        "Type": "aud",
+                        "Value": "mft_api"
+                  }
+            ]
+      }
+]
