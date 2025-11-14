@@ -12,6 +12,9 @@
             "RedirectUris": [
                   "http://localhost:5077"
             ],
+            "PostLogoutRedirectUris": [
+                  "http://localhost:5077/signout-callback-oidc"
+            ],
             "AllowedScopes": [
                   "openid",
                   "profile",
