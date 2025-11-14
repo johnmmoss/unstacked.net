@@ -28,6 +28,15 @@
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-page="/Secure">Secure</a>
                     </li>
+                  
+                </ul>
+                <ul class="navbar-nav">
+                    @if (Context.User.Identity!.IsAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-page="/Logout">Logout</a>
+                        </li>
+                    }
                 </ul>
             </div>
         </div>
