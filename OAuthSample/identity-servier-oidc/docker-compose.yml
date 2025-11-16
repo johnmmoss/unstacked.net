@@ -30,7 +30,12 @@ services:
                 {
                   "Type": "email",
                   "Value": "john@email.com"
+
                 },
+                {
+                  "Type": "name",
+                  "Value": "John"
+                }
             ]}
         ]
       CLIENTS_CONFIGURATION_PATH: /tmp/config/config.json
