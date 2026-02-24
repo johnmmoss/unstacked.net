@@ -39,11 +39,10 @@ terraform {
 
       site_config {
 		always_on           		= false
-		use_32_bit_worker_process 	= true
         
 			application_stack {
 			  current_stack = "dotnet"
-			  dotnet_version = "v8.0" # Or your specific version
+			  dotnet_version = "v8.0" 
 			}
 		}
     }
