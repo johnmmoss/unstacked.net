@@ -28,7 +28,28 @@ steps:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
+- task: PowerShell@2
+  name: ViewResults
+  displayName: View Results
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    targetType: "inline"
+    workingDirectory: "$(Build.SourcesDirectory)"
+    script: |
+      write-host "Current directory:"
+      pwd
+      write-host "Directory contents:"
+      ls
+
+- task: PublishBuildArtifacts@1
+  displayName: "Publish Artifact (web)"
+  inputs:
+    PathtoPublish: "$(build.artifactStagingDirectory)"
+    ArtifactName: "drop_web"
+    publishLocation: "Container"
+    
+- task: PublishBuildArtifacts@1
+  displayName: "Publish Artifact (infra)"
+  inputs:
+    PathtoPublish: "deploy"
+    ArtifactName: "drop_infra"
+    publishLocation: "Container"
