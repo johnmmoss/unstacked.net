@@ -10,7 +10,7 @@ pool:
   vmImage: 'windows-latest'
 
 variables:
-  solution: '**/*.sln'
+  solution: 'AzureAppConfigurationWeb/web/AzureAppConfigurationWeb/AzureAppConfigurationWeb.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
 
@@ -33,7 +33,7 @@ steps:
   displayName: View Results
   inputs:
     targetType: "inline"
-    workingDirectory: "$(Build.SourcesDirectory)"
+    workingDirectory: "$(build.artifactStagingDirectory)"
     script: |
       write-host "Current directory:"
       pwd
@@ -50,6 +50,6 @@ steps:
 - task: PublishBuildArtifacts@1
   displayName: "Publish Artifact (infra)"
   inputs:
-    PathtoPublish: "deploy"
+    PathtoPublish: "AzureAppConfigurationWeb/infra"
     ArtifactName: "drop_infra"
     publishLocation: "Container"
