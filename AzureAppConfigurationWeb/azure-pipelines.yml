@@ -59,6 +59,11 @@ stages:
           - download: current
             artifact: drop_web
 
+          - task: TerraformInstaller@1
+            displayName: 'Install Terraform'
+            inputs:
+              terraformVersion: '1.7.0'
+
           - task: TerraformTaskV4@4
             displayName: 'Terraform Init'
             inputs:
