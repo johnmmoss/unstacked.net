@@ -32,7 +32,7 @@ resource "azurerm_service_plan" "plan" {
 }
 
 resource "azurerm_app_configuration" "appconfig" {
-  name                = "appconfigwebdev"
+  name                = "appconfigwebdev3"
   resource_group_name = data.azurerm_resource_group.rg.name
   location            = data.azurerm_resource_group.rg.location
   sku                 = "free"
