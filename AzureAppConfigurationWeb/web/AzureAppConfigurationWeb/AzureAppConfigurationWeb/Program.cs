@@ -1,6 +1,24 @@
 using AzureAppConfigurationWeb;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var enableAzureAppConfiguration = !builder.Environment.IsDevelopment();
+var useAzureAppConfigurationMiddleware = false;
+
+if (enableAzureAppConfiguration)
+{
+    var appConfigEndpoint = builder.Configuration["AppConfig:Endpoint"];
+    if (!string.IsNullOrWhiteSpace(appConfigEndpoint))
+    {
+        builder.Configuration.AddAzureAppConfiguration(options =>
+            options.Connect(new Uri(appConfigEndpoint), new DefaultAzureCredential())
+                .Select("DisplaySettings:*"));
+
+        builder.Services.AddAzureAppConfiguration();
+        useAzureAppConfigurationMiddleware = true;
+    }
+}
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -20,6 +38,11 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+if (!app.Environment.IsDevelopment() && useAzureAppConfigurationMiddleware)
+{
+    app.UseAzureAppConfiguration();
+}
 
 app.UseAuthorization();
 

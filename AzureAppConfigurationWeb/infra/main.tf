@@ -31,11 +31,26 @@ terraform {
       os_type             = "Windows"
     }
 
+    resource "azurerm_app_configuration" "appconfig" {
+      name                = "appconfigwebdev"
+      resource_group_name = data.azurerm_resource_group.rg.name
+      location            = data.azurerm_resource_group.rg.location
+      sku                 = "free"
+    }
+
     resource "azurerm_windows_web_app" "web" {
       name                = "AppConfigWeb"
       resource_group_name = data.azurerm_resource_group.rg.name
       location            = azurerm_service_plan.plan.location
       service_plan_id     = azurerm_service_plan.plan.id
+
+      identity {
+        type = "SystemAssigned"
+      }
+
+      app_settings = {
+        "AppConfig:Endpoint" = azurerm_app_configuration.appconfig.endpoint
+      }
 
       site_config {
 		always_on           		= false
@@ -45,4 +60,18 @@ terraform {
 			  dotnet_version = "v8.0" 
 			}
 		}
+    }
+
+    resource "azurerm_role_assignment" "web_appconfig_data_reader" {
+      scope                = azurerm_app_configuration.appconfig.id
+      role_definition_name = "App Configuration Data Reader"
+      principal_id         = azurerm_windows_web_app.web.identity[0].principal_id
+    }
+
+    output "app_configuration_endpoint" {
+      value = azurerm_app_configuration.appconfig.endpoint
+    }
+
+    output "app_configuration_name" {
+      value = azurerm_app_configuration.appconfig.name
     }
