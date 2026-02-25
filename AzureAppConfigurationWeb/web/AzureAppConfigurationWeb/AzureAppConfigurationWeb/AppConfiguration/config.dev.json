@@ -1,7 +1,5 @@
 {
-      "DisplaySettings": {
-            "PageTitle": "Azure App Config Demo - PRODUCTION",
-            "HeaderColour": "Yellow",
-            "ShowHeaderWarning": true
-      }
+      "DisplaySettings:PageTitle" : "Azure App Config Demo - PRODUCTION",
+      "DisplaySettings:HeaderColour": "Yellow",
+      "DisplaySettings:ShowHeaderWarning": "false"
 }
