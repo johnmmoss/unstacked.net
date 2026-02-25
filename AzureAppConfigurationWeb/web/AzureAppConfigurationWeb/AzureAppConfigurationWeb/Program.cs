@@ -1,7 +1,10 @@
+using AzureAppConfigurationWeb;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.Configure<DisplaySettings>(builder.Configuration.GetSection("DisplaySettings"));
 
 var app = builder.Build();
 
