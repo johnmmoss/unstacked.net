@@ -66,6 +66,8 @@ terraform {
       scope                = azurerm_app_configuration.appconfig.id
       role_definition_name = "App Configuration Data Reader"
       principal_id         = azurerm_windows_web_app.web.identity[0].principal_id
+
+      depends_on = [azurerm_windows_web_app.web]
     }
 
     output "app_configuration_endpoint" {
