@@ -1,0 +1,8 @@
+{
+      "DisplaySettings:PageTitle" : "Azure App Config Demo",
+      "DisplaySettings:HeaderColour": "Yellow",
+      "DisplaySettings:ShowHeaderWarning": "false",      
+	  "DisplaySettings:PaginationLimit" : 200,
+      "DisplaySettings:DarkMode": "false",
+      "DisplaySettings:UserMode": "Advanced"	  
+}
